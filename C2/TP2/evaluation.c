@@ -72,6 +72,20 @@ Boolean binary_operator_pf(Stack * s, int (*op) (int, int)) {
   return(TRUE);
 }
 
+Boolean unary_operator_pf(Stack * s, int (*op) (int)) {
+  int op1;
+
+  if (isEmpty(s)) {
+    fprintf(stderr, "Empty stack: can not proceed to the binary operation\n");
+    return(FALSE);
+  }
+  op1 = pop(s);
+
+  push(s, (*op)(op1));
+
+  return(TRUE);
+}
+
 /*!
 * Modify the stack state by adding its two first values
 * \param[in,out] s the stack to be modified
@@ -112,6 +126,14 @@ Boolean divide(Stack * s) {
   /* return binary_operator(s, DIVIDE); */
 }
 
+Boolean square_root(Stack * s) {
+  return unary_operator_pf(s, square_root_pf);
+}
+
+Boolean cube(Stack * s) {
+  return unary_operator_pf(s, cube_pf);
+}
+
 int add_pf(int a, int b) {
   return a + b;
 }
@@ -126,6 +148,14 @@ int multiply_pf(int a, int b) {
 
 int divide_pf(int a, int b) {
   return b / a;
+}
+
+int square_root_pf(int a) {
+  return sqrt(a);
+}
+
+int cube_pf(int a) {
+  return a * a * a;
 }
 
 /*!

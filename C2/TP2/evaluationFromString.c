@@ -11,7 +11,7 @@
 #include "evaluation.h"
 #include "stack.h"
 
-Map_element elements[] = {{'+', add}, {'-', substract}, {'*', multiply}, {'/', divide}};
+Map_element elements[] = {{'+', add}, {'-', substract}, {'*', multiply}, {'/', divide}, {'s', square_root}, {'c', cube}};
 
 int isANumber(char c) {
     return (c>='0') && (c <= '9');
@@ -31,25 +31,25 @@ int evaluateExpression(char * str) {
   i = 0;
   while(str[i] != '\0') {
     if (isANumber(str[i]))
-        push(&s, str[i] - '0');
+      push(&s, str[i] - '0');
     else {
-        switch(str[i]) {
-            case '+':
-              add(&s);
-              break;
-            case '-':
-              substract(&s);
-              break;
-            case '*':
-              multiply(&s);
-              break;
-            case '/':
-              divide(&s);
-              break;
-            default:
-              fprintf(stderr, "Unknown operator\n");
-              return 0;
-        }
+      switch(str[i]) {
+        case '+':
+          add(&s);
+          break;
+        case '-':
+          substract(&s);
+          break;
+        case '*':
+          multiply(&s);
+          break;
+        case '/':
+          divide(&s);
+          break;
+        default:
+          fprintf(stderr, "Unknown operator\n");
+          return 0;
+      }
     }
     ++i;
   }
@@ -96,11 +96,11 @@ int evaluateExpression_pf(char * str) {
 int main_eval_string(void) {
     Stack s;
     char * expr1 = "393-4*3/+";
-    /*char * expr2 = "5393-4*3/++sc";*/
+    char * expr2 = "5393-4*3/++sc";
 
     init_stack(&s);
     printf("Evaluation of %s  (should be 11): %d\n", expr1, evaluateExpression_pf(expr1));
-    /*printf("Evaluation of %s  (should be 64): %d\n", expr2, evaluateExpression_pf(expr2));*/
+    printf("Evaluation of %s  (should be 64): %d\n", expr2, evaluateExpression_pf(expr2));
 
     return(EXIT_SUCCESS);
 }

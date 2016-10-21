@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall
-LDFLAGS=
+LDFLAGS=-lm
 
 main: main.o stack.o evaluation.o evaluationFromString.o
 	$(CC) $^ $(LDFLAGS) -o $@

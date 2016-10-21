@@ -19,11 +19,18 @@ Boolean substract(Stack * s);
 Boolean multiply(Stack * s);
 Boolean divide(Stack * s);
 
+Boolean square_root(Stack * s);
+Boolean cube(Stack * s);
+
 int add_pf(int a, int b);
 int substract_pf(int a, int b);
 int multiply_pf(int a, int b);
 int divide_pf(int a, int b);
 
+int square_root_pf(int a);
+int cube_pf(int a);
+
+Boolean unary_operator_pf(Stack * s, int (*op) (int));
 Boolean binary_operator_pf(Stack * s, int (*op) (int, int));
 
 int evaluateExpression(char * str);
