@@ -9,7 +9,6 @@
 
 #include "application.h"
 
-
 /*!
 * Maximal number of values in the stack
 */
@@ -20,7 +19,7 @@
 */
 #define INIT_TOP -1
 
-typedef enum{
+typedef enum {
   NUMBER,
   BINARY_OPERATOR
 } Type_element;

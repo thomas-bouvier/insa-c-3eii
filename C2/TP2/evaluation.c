@@ -78,12 +78,8 @@ Boolean binary_operator_pf(Stack * s, int (*op)(int, int)) {
 * \return Booolean TRUE if the operation is successful, FALSE otherwise
 */
 Boolean add(Stack * s) {
-  return binary_operator_pf(&s, add_pf);
+  return binary_operator_pf(s, add_pf);
   /* return binary_operator(s, ADD); */
-}
-
-int add_pf(int a, int b) {
-  return a + b;
 }
 
 /*!
@@ -92,12 +88,8 @@ int add_pf(int a, int b) {
 * \return Booolean TRUE if the operation is successful, FALSE otherwise
 */
 Boolean substract(Stack * s) {
-  return binary_operator_pf(&s, substract_pf);
+  return binary_operator_pf(s, substract_pf);
   /* return binary_operator(s, SUBSTRACT); */
-}
-
-int substract_pf(int a, int b) {
-  return b - a;
 }
 
 /*!
@@ -106,12 +98,8 @@ int substract_pf(int a, int b) {
 * \return Booolean TRUE if the operation is successful, FALSE otherwise
 */
 Boolean multiply(Stack * s) {
-  return binary_operator_pf(&s, multiply_pf);
+  return binary_operator_pf(s, multiply_pf);
   /* return binary_operator(s, MULTIPLY); */
-}
-
-int multiply_pf(int a, int b) {
-  return a * b;
 }
 
 /*!
@@ -120,8 +108,20 @@ int multiply_pf(int a, int b) {
 * \return Booolean TRUE if the operation is successful, FALSE otherwise
 */
 Boolean divide(Stack * s) {
-  return binary_operator_pf(&s, divide_pf);
+  return binary_operator_pf(s, divide_pf);
   /* return binary_operator(s, DIVIDE); */
+}
+
+int add_pf(int a, int b) {
+  return a + b;
+}
+
+int substract_pf(int a, int b) {
+  return b - a;
+}
+
+int multiply_pf(int a, int b) {
+  return a * b;
 }
 
 int divide_pf(int a, int b) {
