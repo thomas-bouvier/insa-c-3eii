@@ -47,7 +47,7 @@ int evaluateExpression(char * str) {
               divide(&s);
               break;
             default:
-              fprintf(stderr, "unknown operator\n");
+              fprintf(stderr, "Unknown operator\n");
               return 0;
         }
     }
@@ -60,6 +60,7 @@ int evaluateExpression_pf(char * str) {
   Stack s;
   int i;
   int j;
+  Boolean found_operator;
 
   init_stack(&s);
 
@@ -69,9 +70,17 @@ int evaluateExpression_pf(char * str) {
     if (isANumber(str[i]))
       push(&s, str[i] - '0');
     else {
-      for (j = 0; j < sizeof(elements) / sizeof(Map_element); ++j) {
-        if (elements[j].c == str[i])
+      int size = sizeof(elements) / sizeof(Map_element);
+      found_operator = FALSE;
+      for (j = 0; j < size; ++j) {
+        if (elements[j].c == str[i]) {
           (*elements[j].act)(&s);
+          found_operator = TRUE;
+        }
+      }
+      if (found_operator == FALSE) {
+        fprintf(stderr, "Unknown operator\n");
+        return 0;
       }
     }
     ++i;
@@ -90,7 +99,7 @@ int main_eval_string(void) {
     /*char * expr2 = "5393-4*3/++sc";*/
 
     init_stack(&s);
-    printf("Evaluation of %s  (should be 11): %d\n", expr1, evaluateExpression(expr1));
+    printf("Evaluation of %s  (should be 11): %d\n", expr1, evaluateExpression_pf(expr1));
     /*printf("Evaluation of %s  (should be 64): %d\n", expr2, evaluateExpression_pf(expr2));*/
 
     return(EXIT_SUCCESS);
