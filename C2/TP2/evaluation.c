@@ -52,7 +52,7 @@ static Boolean binary_operator(Stack * s, int operation) {
   return(TRUE);
 }
 
-Boolean binary_operator_pf(Stack * s, int (*op)(int, int)) {
+Boolean binary_operator_pf(Stack * s, int (*op) (int, int)) {
   int op1, op2; /* the operands */
 
   if (isEmpty(s)) {
@@ -135,9 +135,6 @@ int divide_pf(int a, int b) {
  */
 int main_eval(void){
     Stack s;
-
-    /* pointer of function */
-    int (*fn)(int, int) = NULL;
 
     init_stack(&s);
 

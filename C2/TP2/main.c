@@ -18,8 +18,8 @@
  */
 int main(void) {
     /*return main_stack();*/
-    return main_eval();
-    /*return main_eval_string();*/
+    /*return main_eval();*/
+    return main_eval_string();
 
     return 0;
 }
