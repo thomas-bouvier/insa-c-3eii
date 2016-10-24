@@ -3,4 +3,7 @@
 !.gitignore
 !*.h
 !*.c
+!*.bmp
+!fichier_gcc32.o
+!fichier_gcc64.o
 !Makefile
