@@ -15,9 +15,9 @@
 * A pixel is defined in RGB space : a byte for each color coponent (Blue, Green, Red)
 */
 typedef struct {
-      unsigned char blue;   /*!<the blue component */
-      unsigned char green;  /*!<the green component */
-      unsigned char red;    /*!<the red component */
+  unsigned char blue;   /*!<the blue component */
+  unsigned char green;  /*!<the green component */
+  unsigned char red;    /*!<the red component */
 } Pixel;
 
 /** struct typedef to define an Image using RBG colour space
@@ -26,9 +26,9 @@ typedef struct {
 * The pixel data is stored continuously in memory, row by row.
 */
 typedef struct {
-      int width;            /*!<the number of columns in the pixel grid*/
-      int height;           /*!<the number of lines in the pixel grid*/
-      Pixel * raw_data;     /*!<the pixel grid*/
+  int width;            /*!<the number of columns in the pixel grid*/
+  int height;           /*!<the number of lines in the pixel grid*/
+  Pixel * raw_data;     /*!<the pixel grid*/
 } Image;
 
 int setPixelxy(Image * image, int x, int y, Pixel p);

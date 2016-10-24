@@ -14,7 +14,7 @@
  * \param[in] s the stack to be initialized
  */
 void init_stack(Stack * s) {
-    s->top = INIT_TOP;
+  s->top = INIT_TOP;
 }
 
 /*!
@@ -22,7 +22,7 @@ void init_stack(Stack * s) {
  * \param[in] s the stack to be deleted
  */
 void delete_stack(Stack * s) {
-    init_stack(s);
+  init_stack(s);
 }
 
 /*!
@@ -50,7 +50,7 @@ int fill_stack(Stack * s, int n_element, ...) {
  * \return Booelan TRUE if empty, FALSE otherwise
  */
 Boolean isEmpty(Stack * s) {
-    return (s->top == INIT_TOP)? TRUE : FALSE;
+  return (s->top == INIT_TOP)? TRUE : FALSE;
 }
 
 /*!
@@ -59,7 +59,7 @@ Boolean isEmpty(Stack * s) {
  * \return Booelan TRUE if full  FALSE otherwise
  */
 Boolean isFull(Stack * s) {
-    return (s->top == STACK_MAX_SIZE -1)? TRUE : FALSE;
+  return (s->top == STACK_MAX_SIZE -1)? TRUE : FALSE;
 }
 
 /*!
@@ -69,17 +69,19 @@ Boolean isFull(Stack * s) {
  * \return int 1 if everything was OK, 0 otherwise
  */
 int push(Stack * s, int value) {
-    if ((s != NULL)) {
-        if ((isFull(s) == FALSE)) {
-            ++(s->top);
-            s->data[s->top] = value;
-            return 1;
-        }
-        fprintf(stderr, "Can not push a value : full stack (overflow)\n");
-        return 0;
+  if ((s != NULL)) {
+    if ((isFull(s) == FALSE)) {
+      ++(s->top);
+      s->data[s->top] = value;
+      return 1;
     }
-    fprintf(stderr, "Can not push a value :  stack is null\n");
+
+    fprintf(stderr, "Can not push a value : full stack (overflow)\n");
     return 0;
+  }
+
+  fprintf(stderr, "Can not push a value:  stack is null\n");
+  return 0;
 }
 
 /*!
@@ -88,16 +90,18 @@ int push(Stack * s, int value) {
  * \return int the value to be removed. Returns 0 if an error occurs.
  */
 int pop(Stack * s) {
-    if ((s != NULL)) {
-        if ((isEmpty(s) == FALSE)) {
-            --(s->top);
-            return s->data[s->top + 1];
-        }
-        fprintf(stderr, "Can not pop a value : empty stack\n");
-        return 0;
+  if ((s != NULL)) {
+    if ((isEmpty(s) == FALSE)) {
+      --(s->top);
+      return s->data[s->top + 1];
     }
-    fprintf(stderr, "Can not pop a value :  stack is null\n");
+
+    fprintf(stderr, "Can not pop a value : empty stack\n");
     return 0;
+  }
+
+  fprintf(stderr, "Can not pop a value :  stack is null\n");
+  return 0;
 }
 
 /*!

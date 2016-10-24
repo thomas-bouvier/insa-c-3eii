@@ -3,9 +3,8 @@
 
 #include "mytools.h"
 
-int main()
-{
+int main() {
 	myHello();
-	
+
 	return 0;
 }

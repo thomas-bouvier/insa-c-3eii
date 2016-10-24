@@ -29,21 +29,21 @@ static Boolean binary_operator(Stack * s, int operation) {
 
   /* computation */
   switch (operation) {
-      case ADD:
-        res = op1 + op2;
-        break;
-      case SUBSTRACT:
-        res = op2 - op1;
-        break;
-      case MULTIPLY:
-        res = op1 * op2;
-        break;
-      case DIVIDE:
-        res = op2 / op1;
-        break;
-      default:
-        fprintf(stderr,"Unknown operator\n");
-        return(FALSE);
+    case ADD:
+      res = op1 + op2;
+      break;
+    case SUBSTRACT:
+      res = op2 - op1;
+      break;
+    case MULTIPLY:
+      res = op1 * op2;
+      break;
+    case DIVIDE:
+      res = op2 / op1;
+      break;
+    default:
+      fprintf(stderr,"Unknown operator\n");
+      return(FALSE);
   }
 
   /* Put the result in the stack */
@@ -164,33 +164,33 @@ int cube_pf(int a) {
  * \return EXIT_SUCCESS if everything is ok
  */
 int main_eval(void){
-    Stack s;
+  Stack s;
 
-    init_stack(&s);
+  init_stack(&s);
 
-    /*
-    push(&s, 1);
-    push(&s, 2);
-    substract(&s);
-    push(&s, 3);
-    add(&s);
-    push(&s, 4);
-    push(&s, 5);
-    add(&s);
-    add(&s);
-    */
+  /*
+  push(&s, 1);
+  push(&s, 2);
+  substract(&s);
+  push(&s, 3);
+  add(&s);
+  push(&s, 4);
+  push(&s, 5);
+  add(&s);
+  add(&s);
+  */
 
-    push(&s, 3);
-    push(&s, 9);
-    push(&s, 3);
-    substract(&s);
-    push(&s, 4);
-    multiply(&s);
-    push(&s, 3);
-    divide(&s);
-    add(&s);
+  push(&s, 3);
+  push(&s, 9);
+  push(&s, 3);
+  substract(&s);
+  push(&s, 4);
+  multiply(&s);
+  push(&s, 3);
+  divide(&s);
+  add(&s);
 
-    printf("Result of this expression (should be 11): %d\n", pop(&s));
+  printf("Result of this expression (should be 11): %d\n", pop(&s));
 
-    return(0);
+  return(0);
 }

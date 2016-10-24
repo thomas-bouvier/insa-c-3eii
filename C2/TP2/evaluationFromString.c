@@ -14,7 +14,7 @@
 Map_element elements[] = {{'+', add}, {'-', substract}, {'*', multiply}, {'/', divide}, {'s', square_root}, {'c', cube}};
 
 int isANumber(char c) {
-    return (c>='0') && (c <= '9');
+  return (c>='0') && (c <= '9');
 }
 
 /*!
@@ -85,6 +85,7 @@ int evaluateExpression_pf(char * str) {
     }
     ++i;
   }
+  
   return pop(&s);
 }
 
@@ -94,13 +95,13 @@ int evaluateExpression_pf(char * str) {
  * \return EXIT_SUCCESS if everything is ok
  */
 int main_eval_string(void) {
-    Stack s;
-    char * expr1 = "393-4*3/+";
-    char * expr2 = "5393-4*3/++sc";
+  Stack s;
+  char * expr1 = "393-4*3/+";
+  char * expr2 = "5393-4*3/++sc";
 
-    init_stack(&s);
-    printf("Evaluation of %s  (should be 11): %d\n", expr1, evaluateExpression_pf(expr1));
-    printf("Evaluation of %s  (should be 64): %d\n", expr2, evaluateExpression_pf(expr2));
+  init_stack(&s);
+  printf("Evaluation of %s  (should be 11): %d\n", expr1, evaluateExpression_pf(expr1));
+  printf("Evaluation of %s  (should be 64): %d\n", expr2, evaluateExpression_pf(expr2));
 
-    return(EXIT_SUCCESS);
+  return(EXIT_SUCCESS);
 }

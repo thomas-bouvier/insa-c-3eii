@@ -17,9 +17,9 @@
  * \return EXIT_SUCCESS if everything is ok
  */
 int main(void) {
-    /*return main_stack();*/
-    /*return main_eval();*/
-    return main_eval_string();
+  /*return main_stack();*/
+  /*return main_eval();*/
+  return main_eval_string();
 
-    return 0;
+  return 0;
 }
