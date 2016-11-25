@@ -45,7 +45,7 @@ int main() {
   createImage(&i);
 
   sprintf(filename, "image_test.bmp");
-  writeBMPFile(filename, &i, 0);
+  writeBMPFile(filename, &i, 1);
 
   return 0;
 }
