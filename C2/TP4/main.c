@@ -24,7 +24,7 @@ int createImage(Image * image) {
 
   for (j = 0; j < image->height; ++j) {
     for (i = 0; i < image->width; ++i) {
-      if (i == j || i == (image->height - j)) {
+      if (i == j || i == (image->height - j - 1)) {
         setPixelxy(image, i, j, bluePixel);
       } else {
         setPixelxy(image, i, j, redPixel);
@@ -39,7 +39,7 @@ int main() {
   char filename[MY_FILENAME_MAX];
   Image i;
 
-  if (allocateImage(&i, 100, 100) == NULL)
+  if (allocateImage(&i, 152, 152) == NULL)
     fprintf(stderr, "Problem occured while allocating memory for image\n");
 
   createImage(&i);

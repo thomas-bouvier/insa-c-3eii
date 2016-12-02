@@ -44,7 +44,10 @@ void writeBMPFile(char * nomFichier, Image * image, int verbose) {
   uncomplete = (dibHeader.image_width * sizeof(Pixel)) % 4;
   fill = (4 - uncomplete) % 4;
 
-  for (j = dibHeader.image_height; j >= 0; --j) {
+  if (verbose)
+    printf("uncomplete: %d, fill: %d\n", uncomplete, fill);
+
+  for (j = dibHeader.image_height - 1; j >= 0; --j) {
     fwrite(&(image->raw_data[j * dibHeader.image_width]), sizeof(Pixel), dibHeader.image_width, f);
     char missing[3];
     fwrite(missing, sizeof(char), fill, f);
