@@ -1,5 +1,47 @@
 #include "fichier.h"
 
+void readFileHeader(FILE * fp, FileHeader * eFichier) {
+  fread(&eFichier->identity, sizeof(char), 2, fp);
+  fread(&eFichier->file_size, sizeof(uint32_t), 1, fp);
+  fread(&eFichier->application_id, sizeof(char), 4, fp);
+  fread(&eFichier->raster_address, sizeof(uint32_t), 1, fp);
+}
+
+void readDIBHeader(FILE * fp,  DIBHeader * eImage) {
+  fread(eImage, sizeof(eImage), 1, fp);
+}
+
+Image * readRawImage(FILE * fp, unsigned int adresse, int l, int h) {
+  Image * image;
+
+  if ((image = (Image *) malloc(sizeof(Image))) == NULL) {
+    free(image);
+    fprintf(stderr, "%s\n", "Erreur lors de l'allocation mémoire de l'image");
+    return NULL;
+  }
+
+  fseek(fp, adresse, SEEK_SET);
+  fread(image, l * h, 1, fp);
+
+  return image;
+}
+
+Image * readBMPFile(char * nomFichier, int verbose) {
+  FILE * f = NULL;
+  FileHeader fileHeader;
+  DIBHeader dibHeader;
+
+  if ((f = fopen(nomFichier, "rb")) == (FILE *) NULL) {
+    fprintf(stderr, "Erreur lors de l'ouverture du fichier");
+    return NULL;
+  }
+
+  readFileHeader(f, &fileHeader);
+  readDIBHeader(f, &dibHeader);
+
+  return readRawImage(f, fileHeader.raster_address, dibHeader.image_width, dibHeader.image_height);
+}
+
 void writeBMPFile(char * nomFichier, Image * image, int verbose) {
   int j;
   int uncomplete;

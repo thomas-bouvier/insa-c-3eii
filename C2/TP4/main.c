@@ -39,13 +39,15 @@ int main() {
   char filename[MY_FILENAME_MAX];
   Image i;
 
-  if (allocateImage(&i, 152, 152) == NULL)
+  if (allocateImage(&i, 153, 153) == NULL)
     fprintf(stderr, "Problem occured while allocating memory for image\n");
 
   createImage(&i);
 
   sprintf(filename, "image_test.bmp");
   writeBMPFile(filename, &i, 1);
+
+  writeBMPFile("image_test_gen.bmp", readBMPFile("image_test.bmp", 1), 1);
 
   return 0;
 }

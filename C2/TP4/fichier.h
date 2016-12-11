@@ -20,10 +20,10 @@ To avoid padding (issue with sizeof(FileHeader) otherwise -> if padding enabled,
 /** A struct typedef to store the content of the BMP file header
 */
 typedef struct {
-  char identity[2];              /*!<"BM" for a Windows BitMap*/
-  uint32_t  file_size;           /*!<4 bytes for an unsigned int*/
-  char application_id[4];        /*!<4 bytes for the id of the application which creates the file*/
-  uint32_t raster_address;       /*!<4 bytes corresponding to the adress in the file where the image data begins*/
+  char identity[2];             /*!<"BM" for a Windows BitMap*/
+  uint32_t file_size;           /*!<4 bytes for an unsigned int*/
+  char application_id[4];       /*!<4 bytes for the id of the application which creates the file*/
+  uint32_t raster_address;      /*!<4 bytes corresponding to the adress in the file where the image data begins*/
 } FileHeader;
 
 
@@ -49,8 +49,8 @@ void displayDIBHeader(DIBHeader * eImage);
 void readFileHeader(FILE * fp, FileHeader * eFichier);
 void readDIBHeader(FILE * fp,  DIBHeader * eImage);
 
-Image* readRawImage(FILE * fp, unsigned int adresse, int l, int h);
-Image* readBMPFile(char * nomFichier, int verbose);
+Image * readRawImage(FILE * fp, unsigned int adresse, int l, int h);
+Image * readBMPFile(char * nomFichier, int verbose);
 
 void writeBMPFile(char * nomFichier, Image * image, int verbose);
 
