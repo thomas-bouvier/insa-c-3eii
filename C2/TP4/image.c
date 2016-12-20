@@ -23,12 +23,24 @@ Pixel getPixelxy(Image * image, int x, int y) {
   return image->raw_data[y * image->width + x];
 }
 
-Image * allocateImage(Image * i, int h, int w) {
-  i->height = h;
-  i->width = w;
-  i->raw_data = (Pixel *) malloc(i->height * i->width * sizeof(Pixel));
+Image * allocateImage(int w, int h) {
+  Image * image;
 
-  return i;
+  if ((image = (Image *) malloc(sizeof(Image))) == (Image *) NULL) {
+    fprintf(stderr, "Error while dynamic allocation for Image\n");
+    return NULL;
+  }
+
+  image->height = h;
+  image->width = w;
+  image->raw_data = (Pixel *) malloc(image->height * image->width * sizeof(Pixel));
+
+  if ((image->raw_data == (Pixel *) NULL)) {
+    fprintf(stderr, "Error while dynamic allocation for Image raw data\n");
+    return NULL;
+  }
+
+  return image;
 }
 
 void freeImage(Image * i) {

@@ -37,15 +37,15 @@ int createImage(Image * image) {
 
 int main() {
   char filename[MY_FILENAME_MAX];
-  Image i;
+  Image * i;
 
-  if (allocateImage(&i, 153, 153) == NULL)
+  if ((i = allocateImage(153, 153)) == (Image *) NULL)
     fprintf(stderr, "Problem occured while allocating memory for image\n");
 
-  createImage(&i);
+  createImage(i);
 
   sprintf(filename, "image_test.bmp");
-  writeBMPFile(filename, &i, 1);
+  writeBMPFile(filename, i, 1);
 
   writeBMPFile("image_test_gen.bmp", readBMPFile("image_test.bmp", 1), 1);
 

@@ -1,27 +1,43 @@
 #include "fichier.h"
 
-void readFileHeader(FILE * fp, FileHeader * eFichier) {
-  fread(&eFichier->identity, sizeof(char), 2, fp);
-  fread(&eFichier->file_size, sizeof(uint32_t), 1, fp);
-  fread(&eFichier->application_id, sizeof(char), 4, fp);
-  fread(&eFichier->raster_address, sizeof(uint32_t), 1, fp);
+void readFileHeader(FILE * f, FileHeader * fileHeader) {
+  rewind(f);
+  fread(&fileHeader->identity, sizeof(char), 2, f);
+  fread(&fileHeader->file_size, sizeof(uint32_t), 1, f);
+  fread(&fileHeader->application_id, sizeof(char), 4, f);
+  fread(&fileHeader->raster_address, sizeof(uint32_t), 1, f);
 }
 
-void readDIBHeader(FILE * fp,  DIBHeader * eImage) {
-  fread(eImage, sizeof(eImage), 1, fp);
+void readDIBHeader(FILE * f,  DIBHeader * dibHeader) {
+  fseek(f, sizeof(FileHeader), SEEK_SET);
+  fread(dibHeader, sizeof(DIBHeader), 1, f);
 }
 
-Image * readRawImage(FILE * fp, unsigned int adresse, int l, int h) {
+Image * readRawImage(FILE * f, unsigned int adresse, int l, int h) {
+  int padding = l % 4;
+  int i;
   Image * image;
 
-  if ((image = (Image *) malloc(sizeof(Image))) == NULL) {
-    free(image);
-    fprintf(stderr, "%s\n", "Erreur lors de l'allocation mémoire de l'image");
+  if ((image = allocateImage(l, h)) == (Image *) NULL) {
+    fprintf(stderr, "Erreur lors de l'allocation mémoire de l'image\n");
     return NULL;
   }
 
-  fseek(fp, adresse, SEEK_SET);
-  fread(image, l * h, 1, fp);
+  image->width = l;
+  image->height = h;
+
+  // cursor at beginning of raw data
+
+  fseek(f, adresse, SEEK_SET);
+
+  // reading data line per line, decreasing order
+
+  for (i = h - 1; i >= 0; i--) {
+    fread(&(image->raw_data[i * l]), sizeof(Pixel), l, f);
+
+    // padding
+    fseek(f, padding, SEEK_CUR);
+  }
 
   return image;
 }
@@ -31,13 +47,30 @@ Image * readBMPFile(char * nomFichier, int verbose) {
   FileHeader fileHeader;
   DIBHeader dibHeader;
 
+  if (verbose) {
+    printf("\nReading %s...\n", nomFichier);
+    printf("---------------------------------------\n");
+  }
+
   if ((f = fopen(nomFichier, "rb")) == (FILE *) NULL) {
     fprintf(stderr, "Erreur lors de l'ouverture du fichier");
     return NULL;
   }
 
+  if (verbose)
+    printf("%s successfully opened\n", nomFichier);
+
+  if (verbose)
+    printf("Reading FileHeader...\n");
   readFileHeader(f, &fileHeader);
+  if (verbose)
+    displayFileHeader(&fileHeader);
+
+  if (verbose)
+    printf("Reading DIBHeader...\n");
   readDIBHeader(f, &dibHeader);
+  if (verbose)
+    displayDIBHeader(&dibHeader);
 
   return readRawImage(f, fileHeader.raster_address, dibHeader.image_width, dibHeader.image_height);
 }
@@ -49,6 +82,11 @@ void writeBMPFile(char * nomFichier, Image * image, int verbose) {
   FILE * f = NULL;
   FileHeader fileHeader;
   DIBHeader dibHeader;
+
+  if (verbose) {
+    printf("\nWriting %s...\n", nomFichier);
+    printf("---------------------------------------\n");
+  }
 
   fileHeader.identity[0] = 'B';
   fileHeader.identity[1] = 'M';
@@ -73,10 +111,14 @@ void writeBMPFile(char * nomFichier, Image * image, int verbose) {
     return;
   }
 
+  // ouput if verbose enabled
+
   if (verbose) {
     displayFileHeader(&fileHeader);
     displayDIBHeader(&dibHeader);
   }
+
+  // writing the headers
 
   fwrite(&fileHeader, sizeof(FileHeader), 1, f);
   fwrite(&dibHeader, sizeof(DIBHeader), 1, f);
@@ -86,11 +128,17 @@ void writeBMPFile(char * nomFichier, Image * image, int verbose) {
   uncomplete = (dibHeader.image_width * sizeof(Pixel)) % 4;
   fill = (4 - uncomplete) % 4;
 
+  // output if verbose enabled
+
   if (verbose)
     printf("uncomplete: %d, fill: %d\n", uncomplete, fill);
 
+  // writing data line per line, decreasing order
+
   for (j = dibHeader.image_height - 1; j >= 0; --j) {
     fwrite(&(image->raw_data[j * dibHeader.image_width]), sizeof(Pixel), dibHeader.image_width, f);
+
+    // padding
     char missing[3];
     fwrite(missing, sizeof(char), fill, f);
   }
@@ -100,6 +148,11 @@ void displayFileHeader(FileHeader * fileHeader) {
   int i;
 
   printf("FileHeader\n");
+
+  if (fileHeader == (FileHeader *) NULL) {
+    fprintf(stderr, "Null FileHeader pointer");
+    return;
+  }
 
   printf("\tidentity: ");
   for (i = 0; i < 2; ++i)
@@ -112,6 +165,11 @@ void displayFileHeader(FileHeader * fileHeader) {
 
 void displayDIBHeader(DIBHeader * dibHeader) {
   printf("DIBHeader\n");
+
+  if (dibHeader == (DIBHeader *) NULL) {
+    fprintf(stderr, "Null DIBHeader pointer");
+    return;
+  }
 
   printf("\tsize_DIBHeader: %d\n", dibHeader->size_DIBHeader);
   printf("\timage_width: %d\n", dibHeader->image_width);

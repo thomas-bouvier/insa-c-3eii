@@ -34,7 +34,7 @@ typedef struct {
 int setPixelxy(Image * image, int x, int y, Pixel p);
 Pixel getPixelxy(Image * image, int x, int y);
 
-Image * allocateImage(Image * image, int l, int h);
+Image * allocateImage(int l, int h);
 void freeImage(Image * i);
 
 #endif

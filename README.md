@@ -32,3 +32,22 @@ Objectives :
 Objectives :
 * Read and write in a binary file ;
 * Discover the Bitmap format for image files.
+
+### 5. Singly linked list (level 1)
+
+Objectives :
+* Use dynamic allocation ;
+* Implement and use singly linked list.
+
+### 6. Singly linked list (level 2)
+
+Objectives :
+* Implement more advanced functionalities on linked lists to obtain a better knowledge of their mechanisms ;
+* Create unit tests on these functionalities.
+
+### 7. Singly linked list (level 3) : code a basic leak memory detector
+
+Objectives :
+* Overload functions using macros ;
+* Manipulate addresses and more particularly void pointers ;
+* Use our linked list interpretation to implement a basic leak memory detector.
