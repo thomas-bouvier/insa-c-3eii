@@ -1,7 +1,7 @@
 # INSA-C
 Le code des TPs de C proposés à l'INSA de Rennes, département EII
 
-![alt tag](http://tomatrocho.ddns.net:5000/sharing/5ttca1eub)
+![alt tag](http://image.noelshack.com/fichiers/2016/51/1482265229-15168898-1848568648698247-7965944903553434182-o.jpg)
 
 ## C2
 
