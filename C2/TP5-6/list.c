@@ -397,6 +397,7 @@ int deleteValue(List * l, int v) {
 
 /*!
 * Sort the list in order to have the int values in a increasing order.
+* This is an insertion sort.
 * \param[out] l the list
 */
 void sort(List * l) {
@@ -624,7 +625,7 @@ void test_list() {
     display_test_check_by_user("Test sort() on a non-empty list : (list should be 0 0 1 2 3 9 10 10 12)");
     printList(&l2);
 
-	  /*Always free the dynamically allocated memory*/
+    /*Always free the dynamically allocated memory*/
 
     freeList(&l1);
     freeList(&l2);
