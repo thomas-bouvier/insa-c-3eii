@@ -357,6 +357,68 @@ int deleteCurrent(List * l, int * v) {
     return 0;
 }
 
+/*!
+* Check if the given value is stored in the list.
+* \param[in] l the list
+* \param[in] v the value to be found
+* \return int 1 if the value was found, 0 otherwise
+*/
+int find(List * l, int v) {
+    setOnFirst(l);
+    while (!outOfList(l)) {
+        if (l->current->val == v)
+            return 1;
+        next(l);
+    }
+
+    return 0;
+}
+
+/*!
+* Delete the element containing the given value in the list.
+* \param[out] l the list
+* \param[in] v the value of the element to be deleted
+* \return int 1 if the value was found and deleted, 0 otherwise
+*/
+int deleteValue(List * l, int v) {
+    setOnFirst(l);
+
+    while (!outOfList(l)) {
+        if (l->current->val == v) {
+            deleteCurrent(l, NULL);
+            return 1;
+        }
+
+        next(l);
+    }
+
+    return 0;
+}
+
+/*!
+* Sort the list in order to have the int values in a increasing order.
+* \param[out] l the list
+*/
+void sort(List * l) {
+    int v;
+    NodeList * pos = NULL;
+
+    setOnFirst(l);
+    next(l);
+    while (!outOfList(l)) {
+        pos = l->current->next;
+        deleteCurrent(l, &v);
+
+        setOnFirst(l);
+        while (l->current != pos && v > l->current->val)
+            next(l);
+
+        insertBeforeCurrent(l, v);
+
+        l->current = pos;
+    }
+}
+
 void test_list() {
     int ret1,ret2;
     int val;
@@ -443,7 +505,7 @@ void test_list() {
     ret1 = deleteLast(&l2, NULL);
     display_test_int("Test deleteLast() on an empty list", 0, ret1);
 
-    /*group 6*/
+    /*group 6-1*/
     // both lists are empty
 
     ret1 = insertAfterCurrent(&l1, 10);
@@ -515,6 +577,51 @@ void test_list() {
 
     ret2 = deleteCurrent(&l2, NULL);
     display_test_check_by_user("Test deleteCurrent() on a non-empty list : (list should be 0 10 2 10 6)");
+    printList(&l2);
+
+    /*group 6-2*/
+
+    ret2 = find(&l2, 1);
+    display_test_int("Test find() on a non-empty list", 0, ret2);
+
+    ret2 = find(&l2, 6);
+    display_test_int("Test find() on a non-empty list", 1, ret2);
+
+    ret2 = deleteValue(&l2, 1);
+    display_test_check_by_user("Test deleteValue() on a non-empty list : (list should be 0 10 2 10 6)");
+    printList(&l2);
+
+    ret2 = deleteValue(&l2, 10);
+    display_test_check_by_user("Test deleteValue() on a non-empty list : (list should be 0 2 10 6)");
+    printList(&l2);
+
+    ret2 = deleteValue(&l2, 6);
+    display_test_check_by_user("Test deleteValue() on a non-empty list : (list should be 0 2 10)");
+    printList(&l2);
+
+    /*group 7*/
+
+    sort(&l1);
+    display_test_check_by_user("Test sort() on an empty list : (list should be empty)");
+    printList(&l1);
+
+    setOnFirst(&l1);
+    insertLast(&l1, 2);
+    insertLast(&l1, 1);
+
+    sort(&l1);
+    display_test_check_by_user("Test sort() on an empty list : (list should be 1, 2)");
+    printList(&l1);
+
+    insertLast(&l2, 1);
+    insertLast(&l2, 3);
+    insertLast(&l2, 9);
+    insertLast(&l2, 0);
+    insertLast(&l2, 12);
+    insertLast(&l2, 10);
+
+    sort(&l2);
+    display_test_check_by_user("Test sort() on a non-empty list : (list should be 0 0 1 2 3 9 10 10 12)");
     printList(&l2);
 
 	  /*Always free the dynamically allocated memory*/

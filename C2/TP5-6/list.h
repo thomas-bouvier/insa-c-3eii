@@ -45,6 +45,13 @@ int insertAfterCurrent(List * l, int v);
 int insertBeforeCurrent(List * l, int v);
 int deleteCurrent(List * l, int * v);
 
+int find(List * l, int v);
+int deleteValue(List * l,  int v);
+
+/*group 7*/
+
+void sort(List * l);
+
 void test_list();
 
 #endif
