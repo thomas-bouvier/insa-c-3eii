@@ -36,41 +36,82 @@ static void freeNodeList(NodeList * n) {
 
 /*group 2*/
 
+/*!
+* Initialize the list structure members to be consistent with an empty list.
+* \param[out] l the list to be initialized
+*/
 void initList(List * l) {
     l->first = NULL;
     l->current = NULL;
     l->last = NULL;
 }
 
+/*!
+* Test if it is an empty list.
+* \param[in] l the list to be tested
+* \return int 1 if empty, 0 otherwise
+*/
 int empty(List * l) {
     return l->first == NULL;
 }
 
+/*!
+* Test if the current node is the first one.
+* \param[in] l the list to be tested
+* \return int if the current node is the first one, 0 otherwise
+*/
 int first(List * l) {
     return l->current == l->first;
 }
 
+/*!
+* Test if the current node is the last one.
+* \param[in] l the list to be tested
+* \return int 1 if the current node is the last one, 0 otherwise
+*/
 int last(List * l) {
     return l->current == l->last;
 }
 
+/*!
+* Test if the current node is not valid (ie NULL).
+* \param[in] l the list to be tested
+* \return int 1 if the current node is not valid, 0 otherwise
+*/
 int outOfList(List * l) {
     return l->current == NULL;
 }
 
+/*!
+* Set the current node on the first one.
+* \param[out] l the list to be modified
+*/
 void setOnFirst(List * l) {
     l->current = l->first;
 }
 
+/*!
+* Set the current node on the last one.
+* \param[out] l the list to be modified
+*/
 void setOnLast(List *l) {
     l->current = l->last;
 }
 
+/*!
+* Set the current node on the next one.
+* \param[out] l the list to be modified
+*/
 void next(List * l) {
     if (!outOfList(l))
         l->current = l->current->next;
 }
 
+/*!
+* Retrieve the int value stored in the current element. If the current element is NULL, return 0.
+* \param[in] l the list
+* \return int the value of the current element if valid, 0 otherwise
+*/
 int getCurrent(List * l) {
     if (!outOfList(l))
         return l->current->val;
@@ -79,8 +120,18 @@ int getCurrent(List * l) {
 
 /*group 3*/
 
+/*!
+* Print the content of the list.
+* \param[in] l the list to be displayed
+*/
 void printList(List * l) {
     setOnFirst(l);
+
+    printf("List printing...\n");
+    printf("\t");
+
+    if (empty(l))
+      printf("Empty list");
 
     while (!outOfList(l)) {
         printf("%d ", getCurrent(l));
@@ -90,6 +141,12 @@ void printList(List * l) {
     printf("\n");
 }
 
+/*!
+* Insert a new element containing the in value given as a parameter at the head of the list.
+* \param[out] l the list
+* \param[in] v the value to be inserted
+* \return int 1 if the element was successfully inserted, 0 otherwise
+*/
 int insertFirst(List * l, int v) {
     NodeList * new_n = newNodeList(v, l->first);
 
@@ -106,6 +163,12 @@ int insertFirst(List * l, int v) {
 
 /*group 4*/
 
+/*!
+* Delete the first element of the list. Free the memory of the deleted list node.
+* \param[out] l the list
+* \param[in] v an address to store the deleted value. If null, no storage is performed.
+* \return int 1 if the element was successfully deleted, 0 otherwise
+*/
 int deleteFirst(List * l, int * v) {
     NodeList * nToDel = l->first;
 
@@ -120,19 +183,35 @@ int deleteFirst(List * l, int * v) {
             l->last = NULL;
 
         freeNodeList(nToDel);
-
         return 1;
     }
 
     return 0;
 }
 
+/*!
+* Suppress all elements from the list.
+* \param[out] l the list to be emptied
+*/
 void freeList(List * l) {
-    l = NULL;
+    NodeList * nToDel;
+    setOnFirst(l);
+
+    while (!outOfList(l)) {
+        nToDel = l->current;
+        next(l);
+        freeNodeList(nToDel);
+    }
 }
 
 /*group 5*/
 
+/*!
+* Insert a new element containing the int value given as a parameter at the tail of the list.
+* \param[out] l the list
+* \param[in] v the value to be inserted
+* \return int 1 if the element was successfully inserted, 0 otherwise
+*/
 int insertLast(List * l, int v) {
     NodeList * new_n = newNodeList(v, NULL);
 
@@ -140,15 +219,21 @@ int insertLast(List * l, int v) {
         return 0;
 
     if (empty(l))
-        l->first = l->last = new_n;
-    else {
-      l->last->next = new_n;
-      l->last = new_n;
-    }
+        l->first = new_n;
+    else
+        l->last->next = new_n;
+
+    l->last = new_n;
 
     return 1;
 }
 
+/*!
+* Delete the last element of the list. Free the memory of the deleted list node.
+* \param[out] l the list
+* \param[in] v an address to store the deleted value. If null, no storage is performed.
+* \return int 1 if the element was successfully deleted, 0 otherwise
+*/
 int deleteLast(List * l, int * v) {
     NodeList * nToDel = l->last;
     NodeList * previous = NULL;
@@ -158,9 +243,9 @@ int deleteLast(List * l, int * v) {
             *v = nToDel->val;
 
         setOnFirst(l);
-        if (l->current == nToDel) {
+        if (l->current == nToDel)
           l->first = NULL;
-        } else {
+        else {
           while (!last(l)) {
             previous = l->current;
             next(l);
@@ -170,9 +255,8 @@ int deleteLast(List * l, int * v) {
 
         l->current = l->last = previous;
 
-        if (l->last == NULL) {
+        if (l->last == NULL)
           l->first = NULL;
-        }
 
         freeNodeList(nToDel);
         return 1;
