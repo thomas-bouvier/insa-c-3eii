@@ -39,6 +39,12 @@ void freeList(List * n);
 int insertLast(List * l, int v);
 int deleteLast(List * l, int * v);
 
+/*group 6*/
+
+int insertAfterCurrent(List * l, int v);
+int insertBeforeCurrent(List * l, int v);
+int deleteCurrent(List * l, int * v);
+
 void test_list();
 
 #endif
