@@ -76,7 +76,7 @@ void initList(List * l) {
 }
 
 void freeList(List * l) {
-    NodeList * nToDel;
+    NodeList * nToDel = NULL;
 
     setOnFirst(l);
     while (!outOfList(l)) {
@@ -122,7 +122,7 @@ void * getCurrentAddress(List * l) {
 }
 
 void printList(List * l) {
-    printf("List printing...\n");
+    printf("===\nList printing...\n===\n");
 
     setOnFirst(l);
     while (!outOfList(l)) {
@@ -151,12 +151,11 @@ int countElement(List * l) {
 
 int insertSort(List * l, const char * f, const char * fn, int ln, void * a) {
     NodeList * new_n = NULL;
-    /*
-    NodeList * previous_n = NULL;
+    NodeList * previous = NULL;
 
     setOnFirst(l);
     while (!outOfList(l) && strcmp(f, l->current->b.file) > 0) {
-        previous_n = l->current;
+        previous = l->current;
         next(l);
     }
 
@@ -165,28 +164,29 @@ int insertSort(List * l, const char * f, const char * fn, int ln, void * a) {
     if (new_n == NULL)
         return 0;
 
-    if (empty(l)) {
-      l->first = l->last = new_n;
-      return 1;
-    }
-
-    previous_n->next = new_n;
-    return 1;
-    */
-
-    new_n = newNodeList(f, fn, ln, a, NULL);
-
-    if (new_n == NULL)
-        return 0;
-
-    if (empty(l))
-        l->first = new_n;
+    if (previous)
+        previous->next = new_n;
     else
-        l->last->next = new_n;
-
-    l->last = new_n;
+        l->first = new_n;
 
     return 1;
+
+    // insertLast()
+    /*
+        new_n = newNodeList(f, fn, ln, a, NULL);
+
+        if (new_n == NULL)
+            return 0;
+
+        if (empty(l))
+            l->first = new_n;
+        else
+            l->last->next = new_n;
+
+        l->last = new_n;
+
+        return 1;
+    */
 }
 
 int find(List * l, void * a) {

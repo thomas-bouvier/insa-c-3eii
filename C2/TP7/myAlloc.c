@@ -61,6 +61,6 @@ int myCheck() {
  * Free every memory block registered in the list.
 */
 void myGarbageCollector() {
-		printf("=== Garbage collector\n");
+		printf("===\nGarbage collector\n===\n");
 		freeList(&l);
 }
