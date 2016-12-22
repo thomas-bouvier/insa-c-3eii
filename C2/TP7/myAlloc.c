@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include List l = {NULL, NULL, NULL};
+#include "memoryList.h"
+
+static List l = {NULL, NULL, NULL};
 
 /*!
  * \brief Redefines the malloc function behavior
@@ -16,14 +18,14 @@
  * \return void * the address of the allocated block
 */
 void * myMalloc(unsigned int size, const char * file,  const char * func, int line) {
-	void * allocated_block;
+	void * allocated_block = NULL;
 
-	allocated_block = malloc(size);
-
-	if (allocated_block != NULL) {
-			insertSort(&l, f, func, line, allocated_block);
+	if ((allocated_block = malloc(size)) != NULL) {
+			insertSort(&l, file, func, line, allocated_block);
       printf("In file %s,\n\t function %s,\n\t\t line %d :\n\t\t\t allocated block at memory address: %p\n", file, func, line, allocated_block);
 	}
+
+	printList(&l);
 
 	return allocated_block;
 }
@@ -38,8 +40,9 @@ void * myMalloc(unsigned int size, const char * file,  const char * func, int li
  * \param[in] line the line number where the memory deallocation is required
 */
 void myFree(void * block, const char * file,  const char * func, int line) {
-    if(block != NULL) {
+    if (block) {
         deleteValue(&l, block);
+				free(block);
         printf("In file %s,\n\t function %s,\n\t\t line %d :\n\t\t\t freed block at memory address: %p\n", file, func, line, block);
     }
 }
@@ -51,5 +54,13 @@ void myFree(void * block, const char * file,  const char * func, int line) {
  * \return int the number of allocated blocks
 */
 int myCheck() {
-    return empty(&l);
+		return countElement(&l);
+}
+
+/*!
+ * Free every memory block registered in the list.
+*/
+void myGarbageCollector() {
+		printf("=== Garbage collector\n");
+		freeList(&l);
 }

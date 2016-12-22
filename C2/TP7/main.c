@@ -1,16 +1,12 @@
 /*!
- * \file  main.c
+ * \file main.c
  * \brief
- * \author Muriel Pressigout
- * \date 16/12/2013
  * This executive tests dynamic memory management
 */
-
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 
 /*!
  * \def MEMCHECK
@@ -43,10 +39,14 @@ int main() {
     free(t);
 
 #ifdef MEMCHECK
-    if (myCheck())
-        printf("There are unfreed memory blocks\n");
+    printf("There are %d unfreed memory blocks\n", check = myCheck());
+
+    // at least one memory block has not been freed
+    if (check) {
+        myGarbageCollector();
+        printf("There are %d unfreed memory blocks\n", check = myCheck());
+    }
 #endif
 
-    system("pause");
     return 0;
 }

@@ -16,10 +16,9 @@
 /*group 1*/
 
 static NodeList * newNodeList(int v, NodeList * n) {
-    NodeList * new_node;
+    NodeList * new_node = NULL;
 
-    new_node = (NodeList *) malloc(sizeof(NodeList));
-    if (new_node == NULL) {
+    if ((new_node = (NodeList *) malloc(sizeof(NodeList)) == (NodeList *) NULL) {
         fprintf(stderr, "Allocation error\n");
         exit(0);
     }
@@ -194,14 +193,16 @@ int deleteFirst(List * l, int * v) {
 * \param[out] l the list to be emptied
 */
 void freeList(List * l) {
-    NodeList * nToDel;
-    setOnFirst(l);
+    NodeList * nToDel = NULL;
 
+    setOnFirst(l);
     while (!outOfList(l)) {
         nToDel = l->current;
         next(l);
         freeNodeList(nToDel);
     }
+
+    l->first = l->current = l->last = NULL;
 }
 
 /*group 5*/

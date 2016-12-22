@@ -2,13 +2,10 @@ CC=gcc
 CFLAGS=-Wall
 LDFLAGS=
 
-main: main.o list.o myAlloc.o myFunctions.o test.o memoryList.o
+main: main.o myAlloc.o myFunctions.o test.o memoryList.o
 	$(CC) $^ $(LDFLAGS) -o $@
 
 main.o: main.c
-	$(CC) $(CFLAGS) -c $<
-
-list.o: list.c list.h
 	$(CC) $(CFLAGS) -c $<
 
 myAlloc.o: myAlloc.c myAlloc.h
