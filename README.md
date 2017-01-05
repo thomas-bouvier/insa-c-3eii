@@ -51,3 +51,9 @@ Objectives :
 * Overload functions using macros ;
 * Manipulate addresses and more particularly void pointers ;
 * Use our linked list interpretation to implement a basic leak memory detector.
+
+### 8. Balanced trees : AVL trees
+
+Objectives :
+* Manipulate binary trees ;
+* Use recursive programming to implement an AVL tree.
