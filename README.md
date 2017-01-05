@@ -57,3 +57,12 @@ Objectives :
 Objectives :
 * Manipulate binary trees ;
 * Use recursive programming to implement an AVL tree.
+
+### 9. Trees : Huffman coding
+
+Objectives :
+* Implement a binary tree ;
+* Use recursive programming in the tree use case ;
+* Build a tree by a bottom-up method ;
+* First approach of a coding method : Huffman tree ;
+* Read image data from binary files.

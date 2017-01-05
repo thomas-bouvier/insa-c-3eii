@@ -277,7 +277,7 @@ DTree leftRotation(DTree t) {
 */
 DTree reBalance(DTree t) {
     if (isEmpty(t))
-        return NULL;
+        return t;
 
     int balance = balanceFactor(t);
     if (balance > 1) {
