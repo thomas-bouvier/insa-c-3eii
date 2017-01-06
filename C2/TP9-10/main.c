@@ -36,5 +36,7 @@ int main() {
 
     printTree(node_15);
 
+    printCodewords(node_15);
+
     return 0;
 }

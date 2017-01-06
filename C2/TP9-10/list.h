@@ -17,17 +17,17 @@ typedef struct NodeList {
 	 struct NodeList * next;    /*!< A pointer to the next element in the list*/
 } NodeList;
 
-
-
 /*!
 * \brief list of tree nodes
 */
-typedef struct{
+typedef struct {
 	 NodeList * first; 			/*!< A pointer to the first list element*/
 	 NodeList * current; 		/*!< A pointer to the current list element*/
 	 NodeList * last; 			/*!< A pointer to the last list element*/
 } List;
 
+NodeList * newNodeList(NodeTree * t, NodeList * n);
+void deleteNodeList(NodeList * n);
 
 void initList(List * l);
 void deleteList(List * l);

@@ -93,10 +93,6 @@ void printTree(Binary_tree t) {
     print_t(t);
 }
 
-void printCodewords(Binary_tree t) {
-
-}
-
 static void printCode(char cod[CODESIZEMAX], int size_code, float pb) {
     int i;
 
@@ -104,4 +100,43 @@ static void printCode(char cod[CODESIZEMAX], int size_code, float pb) {
     for (i = 0; i < size_code; i++)
         printf(" %c", cod[i]);
     printf("\n");
+}
+
+static int isLeaf(Binary_tree t) {
+    if (t == NULL)
+        return 0;
+
+    return t->left == NULL && t->right == NULL;
+}
+
+static void printCodewordsRec(Binary_tree t, char cod[CODESIZEMAX], int depth) {
+  char cod_left[CODESIZEMAX];
+  char cod_right[CODESIZEMAX];
+
+    if (t != NULL) {
+        strcpy(cod_left, cod);
+        strcpy(cod_right, cod);
+
+        cod_left[depth] = '0';
+        cod_left[depth + 1] = '\0';
+        cod_right[depth] = '1';
+        cod_right[depth + 1] = '\0';
+
+        printCodewordsRec(t->left, cod_left, depth + 1);
+
+        if (isLeaf(t))
+            printCode(cod, depth, t->proba);
+
+        printCodewordsRec(t->right, cod_right, depth + 1);
+    }
+}
+
+void printCodewords(Binary_tree t) {
+    if (t == NULL) {
+        fprintf(stderr, "The tree you are trying to print is NULL\n");
+        return;
+    }
+
+    printCodewordsRec(t->left, "0", 1);
+    printCodewordsRec(t->right, "1", 1);
 }
