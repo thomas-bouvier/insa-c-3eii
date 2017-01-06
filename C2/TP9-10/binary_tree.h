@@ -11,6 +11,9 @@
 */
 #define CODESIZEMAX 100
 
+#include <stdlib.h>
+#include <stdio.h>
+
 /*!
 * \brief Data element of a binary tree associated to a probability.
 * If the left and right children are not null, its probability shall be equal to the sum of its children's probabilies.
@@ -26,11 +29,12 @@ typedef struct NodeTree {
 */
 typedef NodeTree * Binary_tree;
 
+NodeTree * newNodeTree(float p, NodeTree * l, NodeTree * r);
+void deleteNodeTree(NodeTree * n);
 
 NodeTree * buildParentNode(NodeTree * l, NodeTree * r);
 
 void printTree(Binary_tree t);
-
 void printCodewords(Binary_tree t);
 
 #endif

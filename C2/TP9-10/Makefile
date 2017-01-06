@@ -2,13 +2,16 @@ CC=gcc
 CFLAGS=-Wall
 LDFLAGS=
 
-main: main.o myDoubleTree.o
+main: main.o binary_tree.o list.o
 	$(CC) $^ $(LDFLAGS) -o $@
 
 main.o: main.c
 	$(CC) $(CFLAGS) -c $<
 
-myDoubleTree.o: myDoubleTree.c myDoubleTree.h
+binary_tree.o: binary_tree.c binary_tree.h
+	$(CC) $(CFLAGS) -c $<
+
+list.o: list.c list.h
 	$(CC) $(CFLAGS) -c $<
 
 clean:
