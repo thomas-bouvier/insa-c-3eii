@@ -18,6 +18,7 @@ NodeList * newNodeList(NodeTree * t, NodeList * n) {
 }
 
 void deleteNodeList(NodeList * n) {
+    deleteNodeTree(n->t);
     free(n);
 }
 
@@ -128,7 +129,20 @@ int insertSort(List * l, NodeTree * t) {
 }
 
 NodeTree * removeFirst(List * l) {
-    NodeTree * first = l->first->t;
-    l->first = l->first->next;
-    return first;
+    NodeTree * first = NULL;
+    NodeList * nToDel = NULL;
+
+    if (l != NULL) {
+        if (l->first != NULL) {
+            first = l->first->t;
+
+            nToDel = l->first;
+            l->first = nToDel->next;
+            free(nToDel);
+        }
+
+        return first;
+    }
+
+    return NULL;
 }
