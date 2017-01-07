@@ -169,6 +169,9 @@ int insertSort(List * l, const char * f, const char * fn, int ln, void * a) {
     else
         l->first = new_n;
 
+    if (previous == l->last)
+        l->last = new_n;
+
     return 1;
 
     // insertLast()

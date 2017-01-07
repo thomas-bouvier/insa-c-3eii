@@ -1,4 +1,5 @@
 #include "binary_tree.h"
+#include "huffman.h"
 
 int main() {
     NodeTree * node_1 = NULL;
@@ -37,6 +38,9 @@ int main() {
     printTree(node_15);
 
     printCodewords(node_15);
+
+    printf("\nHuffman\n");
+    huffmanTest();
 
     return 0;
 }

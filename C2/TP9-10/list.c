@@ -4,9 +4,9 @@
 #include "list.h"
 
 NodeList * newNodeList(NodeTree * t, NodeList * n) {
-    NodeList * new_node = NULL;
+    NodeList * new_node = (NodeList *) malloc(sizeof(NodeList));
 
-    if ((new_node = (NodeList *) malloc(sizeof(NodeList)) == (NodeList *) NULL)) {
+    if (new_node == NULL) {
         fprintf(stderr, "Allocation error\n");
         exit(0);
     }
@@ -37,7 +37,7 @@ void deleteList(List * l) {
         deleteNodeList(nToDel);
     }
 
-    l->first = l->current = l->last = NULL;
+    initList(l);
 }
 
 int empty(List * l) {
@@ -72,6 +72,7 @@ void next(List * l) {
 NodeTree * getCurrentTree(List * l) {
     if (!outOfList(l))
         return l->current->t;
+
     return 0;
 }
 
@@ -79,7 +80,6 @@ void printList(List * l) {
     setOnFirst(l);
 
     printf("List printing...\n");
-    printf("\t");
 
     if (empty(l))
       printf("Empty list");
@@ -96,21 +96,33 @@ int insertSort(List * l, NodeTree * t) {
     NodeList * new_n = NULL;
     NodeList * previous = NULL;
 
-    setOnFirst(l);
-    while (!outOfList(l) && t->proba > l->current->t->proba) {
-        previous = l->current;
-        next(l);
+    if (empty(l)) {
+        new_n = newNodeList(t, l->first);
+
+        if (new_n == NULL)
+            return 0;
+
+        l->first = l->current = l->last = new_n;
+    } else {
+        setOnFirst(l);
+        while (!outOfList(l) && t->proba > l->current->t->proba) {
+            previous = l->current;
+            next(l);
+        }
+
+        new_n = newNodeList(t, l->current);
+
+        if (new_n == NULL)
+            return 0;
+
+        if (previous)
+            previous->next = new_n;
+        else
+            l->first = new_n;
+
+        if (previous == l->last)
+            l->last = new_n;
     }
-
-    new_n = newNodeList(t, l->current);
-
-    if (new_n == NULL)
-        return 0;
-
-    if (previous)
-        previous->next = new_n;
-    else
-        l->first = new_n;
 
     return 1;
 }
