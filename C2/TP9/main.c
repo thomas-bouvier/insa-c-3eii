@@ -2,6 +2,7 @@
 #include "huffman.h"
 
 int main() {
+    /*
     NodeTree * node_1 = NULL;
     NodeTree * node_2 = NULL;
     NodeTree * node_3 = NULL;
@@ -38,9 +39,33 @@ int main() {
     printTree(node_15);
 
     printCodewords(node_15);
+    */
 
-    printf("\nHuffman\n");
-    huffmanTest();
+    List l1;
+    List l2;
+    List l3;
+
+    printf("=======================================\n");
+    printf("Huffman\n");
+    printf("=======================================\n");
+
+    float probas[] = {0.01, 0.05, 0.07, 0.09, 0.11, 0.15, 0.22, 0.3};
+
+    initList(&l1);
+    fillList(&l1, probas);
+
+    printList(&l1);
+
+    buildHuffmanTree(&l1);
+    printCodewords(l1.first->t);
+
+    printf("\n");
+    printf("=======================================\n");
+    printf("Huffman - IM1.IM\n");
+    printf("=======================================\n");
+
+    initList(&l2);
+    fillList(&l2, readProbaFromFile("IM2.IM", probas, 1));
 
     return 0;
 }

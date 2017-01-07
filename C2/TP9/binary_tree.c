@@ -28,8 +28,8 @@ NodeTree * buildParentNode(NodeTree * p1, NodeTree * p2) {
     return newNodeTree(p1->proba + p2->proba, p1, p2);
 }
 
-static int _print_t(Binary_tree t, int is_left, int offset, int depth, char s[20][255]) {
-    char b[20];
+static int _print_t(Binary_tree t, int is_left, int offset, int depth, char s[15][255]) {
+    char b[15];
     int width = 5;
 
     if (t == NULL) return 0;
@@ -79,13 +79,13 @@ static int _print_t(Binary_tree t, int is_left, int offset, int depth, char s[20
 }
 
 static void print_t(Binary_tree t) {
-    char s[20][255];
-    for (int i = 0; i < 20; i++)
+    char s[15][255];
+    for (int i = 0; i < 15; i++)
         sprintf(s[i], "%80s", " ");
 
     _print_t(t, 0, 0, 0, s);
 
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 15; i++)
         printf("%s\n", s[i]);
 }
 

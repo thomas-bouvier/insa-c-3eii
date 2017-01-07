@@ -9,7 +9,6 @@
 int fillList(List * l, float pb[NBVALUES]);
 
 NodeTree * buildHuffmanTree(List * l);
-
-void huffmanTest();
+int readProbaFromFile(char * name, float pb[NBVALUES], int verbose);
 
 #endif
