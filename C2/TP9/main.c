@@ -51,6 +51,9 @@ int main() {
 
     float probas[] = {0.01, 0.05, 0.07, 0.09, 0.11, 0.15, 0.22, 0.3};
 
+    float pb1[NBVALUES];
+    float pb2[NBVALUES];
+
     initList(&l1);
     fillList(&l1, probas);
 
@@ -65,7 +68,23 @@ int main() {
     printf("=======================================\n");
 
     initList(&l2);
-    fillList(&l2, readProbaFromFile("IM2.IM", probas, 1));
+    readProbaFromFile("IM1.IM", pb1, 0);
+    fillList(&l2, pb1);
+
+    buildHuffmanTree(&l2);
+    printCodewords(l2.first->t);
+
+    printf("\n");
+    printf("=======================================\n");
+    printf("Huffman - IM2.IM\n");
+    printf("=======================================\n");
+
+    initList(&l3);
+    readProbaFromFile("IM2.IM", pb2, 0);
+    fillList(&l3, pb2);
+
+    buildHuffmanTree(&l3);
+    printCodewords(l3.first->t);
 
     return 0;
 }

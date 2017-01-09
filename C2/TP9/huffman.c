@@ -42,7 +42,7 @@ NodeTree * buildHuffmanTree(List * l) {
 
 int readProbaFromFile(char * name, float pb[NBVALUES], int verbose) {
     FILE * f = NULL;
-    short int buffer;
+    uint16_t buffer ;
     int nbInstances[NBVALUES] = {0};
     int i;
 
@@ -51,24 +51,14 @@ int readProbaFromFile(char * name, float pb[NBVALUES], int verbose) {
         return 0;
     }
 
-    i = 0;
-    while (1) {
-        fread(&buffer, sizeof(short int), 1, f);
-        if (buffer >= 0 && buffer < NBVALUES)
-            ++nbInstances[buffer];
+    while(fread(&buffer, sizeof(uint16_t), 1, f)) {
+      if (buffer >= 0 && buffer < NBVALUES)
+          ++(nbInstances[buffer]);
 
-        if (verbose)
-            printf("buffer: %d (nb %d)\n", buffer, i);
-
-        if (feof(f))
-            break;
-
-        ++i;
+      if (verbose)
+          printf("buffer: %d (nb %d)\n", buffer, i);
     }
-    printf("test");
     fclose(f);
-
-    printf("close");
 
     for (i = 0; i < NBVALUES; ++i)
         pb[i] = ((float) nbInstances[i]) / ((float) 64 * 64);

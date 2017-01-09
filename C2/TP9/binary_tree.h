@@ -13,6 +13,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <inttypes.h>
 
 /*!
 * \brief Data element of a binary tree associated to a probability.
