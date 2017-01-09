@@ -28,18 +28,24 @@ NodeTree * buildParentNode(NodeTree * p1, NodeTree * p2) {
     return newNodeTree(p1->proba + p2->proba, p1, p2);
 }
 
-static int _print_t(Binary_tree t, int is_left, int offset, int depth, char s[15][255]) {
-    char b[15];
+static int getHeight(NodeTree * t) {
+    if (t == NULL || t->left == NULL || t->right == NULL)
+        return 0;
+
+    return 1 + MAX(getHeight(t->left), getHeight(t->right));
+}
+
+static int _print_t(Binary_tree t, int is_left, int offset, int depth, char s[HEIGHTMAX][255], int height) {
+    char b[height];
     int width = 5;
 
     if (t == NULL) return 0;
 
     sprintf(b, "%5.3f", t->proba);
 
-    int left  = _print_t(t->left,  1, offset,                depth + 1, s);
-    int right = _print_t(t->right, 0, offset + left + width, depth + 1, s);
+    int left  = _print_t(t->left,  1, offset,                depth + 1, s, height - 1);
+    int right = _print_t(t->right, 0, offset + left + width, depth + 1, s, height - 1);
 
-#ifdef COMPACT
     for (int i = 0; i < width; i++)
         s[depth][offset + left + i] = b[i];
 
@@ -55,37 +61,22 @@ static int _print_t(Binary_tree t, int is_left, int offset, int depth, char s[15
 
         s[depth - 1][offset + left + width / 2] = '.';
     }
-#else
-    for (int i = 0; i < width; i++)
-        s[2 * depth][offset + left + i] = b[i];
-
-    if (depth && is_left) {
-        for (int i = 0; i < width + right; i++)
-            s[2 * depth - 1][offset + left + width / 2 + i] = '-';
-
-        s[2 * depth - 1][offset + left + width / 2] = '+';
-        s[2 * depth - 1][offset + left + width + right + width / 2] = '+';
-
-    } else if (depth && !is_left) {
-        for (int i = 0; i < left + width; i++)
-            s[2 * depth - 1][offset - width / 2 + i] = '-';
-
-        s[2 * depth - 1][offset + left + width / 2] = '+';
-        s[2 * depth - 1][offset - width / 2 - 1] = '+';
-    }
-#endif
 
     return left + width + right;
 }
 
 static void print_t(Binary_tree t) {
-    char s[15][255];
-    for (int i = 0; i < 15; i++)
+    int height = getHeight(t) + 3;
+    if (height > HEIGHTMAX)
+        height = HEIGHTMAX;
+
+    char s[height][255];
+    for (int i = 0; i < height; ++i)
         sprintf(s[i], "%80s", " ");
 
-    _print_t(t, 0, 0, 0, s);
+    _print_t(t, 0, 0, 0, s, height);
 
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < height; ++i)
         printf("%s\n", s[i]);
 }
 

@@ -11,6 +11,10 @@
 */
 #define CODESIZEMAX 100
 
+#define HEIGHTMAX 20
+
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <inttypes.h>
