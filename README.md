@@ -66,3 +66,9 @@ Objectives :
 * Build a tree by a bottom-up method ;
 * First approach of a coding method : Huffman tree ;
 * Read image data from binary files.
+
+### 10. Graphs : Dijkstra's algorithm
+
+Objectives :
+* Implement functionalities for a weighted directed graph implemented using linked lists ;
+* Implement Dijkstra's algorithm to find the shortest path.
