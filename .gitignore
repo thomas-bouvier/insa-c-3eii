@@ -8,3 +8,4 @@
 !fichier_gcc64.o
 !Makefile
 !*.IM
+!*.dot

@@ -68,7 +68,7 @@ struct VertexList {
 * \brief the edge structure
 */
 struct Edge {
-    Vertex *v;              /*!< the successor vertex*/
+    Vertex * v;              /*!< the successor vertex*/
     int dist;               /*!< The distance between the two vertices*/
     struct Edge * next_e;   /*!< the address of the next element in the list*/
 };
