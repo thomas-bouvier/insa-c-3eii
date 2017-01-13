@@ -6,6 +6,12 @@
 !*.bmp
 !fichier_gcc32.o
 !fichier_gcc64.o
+!vertexList_gcc32.o
+!vertexList_gcc64.o
+!edgeList_gcc32.o
+!edgeList_gcc64.o
+!graph_gcc32.o
+!graph_gcc64.o
 !Makefile
 !*.IM
 !*.dot

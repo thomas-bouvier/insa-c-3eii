@@ -42,13 +42,13 @@ int main() {
     printGraph(&g);
     writeGraphViz(&g, "graph.dot");
 
-    /*
     dist_to_origin = shortestPathDijkstra(&g, 'D', 'H');
     printf("Shortest path from %c to %c : %dkm\n", 'D', 'H', dist_to_origin);
     printf("This path is \n");
+    /*
     printEdgeList(&findVertex(&g,'H')->path);
     */
-    
+
     deleteGraph(&g);
 
     return EXIT_SUCCESS;
