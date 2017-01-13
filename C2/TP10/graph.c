@@ -29,6 +29,38 @@ int writeGraphViz(Graph * g, char * filename) {
     return 0;
 }
 
+static Vertex * findNearestVertex(Graph * g) {
+    int shortestDist = MY_INFINITY;
+    Vertex * nearestVertex = NULL;
+
+    setOnFirstVertex(g);
+    while (!outOfVertexList(g)) {
+        if (g->current->already_visited == 0) {
+            if (g->current->dist_to_origin < shortestDist) {
+                shortestDist = g->current->dist_to_origin;
+                nearestVertex = g->current;
+            }
+        }
+
+        nextVertex(g);
+    }
+
+    return nearestVertex;
+}
+
+static void updateDistSuccessors(Vertex * v) {
+    EdgeList * successors = &(v->connect);
+
+    setOnFirstEdge(successors);
+    while (!outOfEdgeList(successors)) {
+        if (successors->current->v->dist_to_origin > v->dist_to_origin + successors->current->dist) {
+            successors->current->v->dist_to_origin = v->dist_to_origin + successors->current->dist;
+        }
+
+        nextEdge(successors);
+    }
+}
+
 static void initDijkstra(Graph * g, Vertex * root) {
     setOnFirstVertex(g);
     while (!outOfVertexList(g)) {
@@ -37,79 +69,34 @@ static void initDijkstra(Graph * g, Vertex * root) {
 
         nextVertex(g);
     }
+
     root->dist_to_origin = 0;
+    root->already_visited = 1;
+
+    updateDistSuccessors(root);
 
     g->current = root;
 }
 
-static Vertex * findNearestVertex(Graph * g) {
-    int shortestDist = 0;
-    Vertex * nearestVertex = NULL;
-    EdgeList * successors = &(g->current->connect);
-
-    setOnFirstEdge(successors);
-    while (!outOfEdgeList(successors)) {
-        if (successors->current->dist < shortestDist) {
-            shortestDist = successors->current->dist;
-            nearestVertex = successors->current;
-        }
-
-        nextEdge(successors);
-    }
-
-    return nearestVertex;
-}
-
-static void updateDist(Vertex * v1, Vertex * v2) {
-    int v2IsSuccessorOfV1 = 0;
-    int distBetweenVertices = -1;
-    EdgeList * successors = &(v1->connect);
-
-    setOnFirstEdge(successors);
-    while (!outOfEdgeList(successors)) {
-        if (successors->current->v == v2) {
-            v2IsSuccessorOfV1 = 1;
-            distBetweenVertices = successors->current->dist;
-        }
-    }
-
-    if (v2IsSuccessorOfV1 == 0) {
-        fprintf(stderr, "%c is not a successor of %c\n", v2->label, v1->label);
-        return;
-    }
-
-    if (v2->dist_to_origin > v1->dist_to_origin + distBetweenVertices) {
-        v2->dist_to_origin = v1->dist_to_origin + distBetweenVertices;
-    }
-}
-
 int shortestPathDijkstra(Graph * g, char val1, char val2) {
     Vertex * min = NULL;
-    EdgeList * successors = NULL;
+
+    Vertex * dest = findVertexGraph(g, val2);
     Vertex * root = findVertexGraph(g, val1);
+    
     if (root == NULL)
         return -1;
 
-    initDijkstra(g, findVertexGraph(g, val1));
+    initDijkstra(g, root);
 
-    while (1) {
+    while (dest->already_visited == 0) {
         min = findNearestVertex(g);
+        min->already_visited = 1;
 
         printf("%c\n", min->label);
 
-
-        min->already_visited = 1;
-
-        /*
-        successors = &(min->connect);
-
-        setOnFirstEdge(successors);
-        while (!outOfEdgeList(successors)) {
-            updateDist(min, successors->current->v);
-            nextEdge(successors);
-        }
-        */
-        break;
+        updateDistSuccessors(min);
+        g->current = min;
     }
 
     return 0;
