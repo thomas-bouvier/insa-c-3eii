@@ -50,11 +50,24 @@ static Vertex * findNearestVertex(Graph * g) {
 
 static void updateDistSuccessors(Vertex * v) {
     EdgeList * successors = &(v->connect);
+    EdgeList * pathIterator = NULL;
 
     setOnFirstEdge(successors);
     while (!outOfEdgeList(successors)) {
         if (successors->current->v->dist_to_origin > v->dist_to_origin + successors->current->dist) {
             successors->current->v->dist_to_origin = v->dist_to_origin + successors->current->dist;
+
+            deleteEdgeList(&successors->current->v->path);
+
+            pathIterator = &(v->path);
+            setOnFirstEdge(pathIterator);
+            while (!outOfEdgeList(pathIterator)) {
+                addEdge(&successors->current->v->path, pathIterator->current->v, pathIterator->current->dist);
+                nextEdge(pathIterator);
+            }
+
+            addEdge(&successors->current->v->path, successors->current->v, successors->current->dist);
+            pathIterator = NULL;
         }
 
         nextEdge(successors);
@@ -73,6 +86,7 @@ static void initDijkstra(Graph * g, Vertex * root) {
     root->dist_to_origin = 0;
     root->already_visited = 1;
 
+    addEdge(&root->path, root, 0);
     updateDistSuccessors(root);
 
     g->current = root;
@@ -83,11 +97,12 @@ int shortestPathDijkstra(Graph * g, char val1, char val2) {
 
     Vertex * dest = findVertexGraph(g, val2);
     Vertex * root = findVertexGraph(g, val1);
-    
+
     if (root == NULL)
         return -1;
 
     initDijkstra(g, root);
+    printf("%c\n", root->label);
 
     while (dest->already_visited == 0) {
         min = findNearestVertex(g);
@@ -99,5 +114,5 @@ int shortestPathDijkstra(Graph * g, char val1, char val2) {
         g->current = min;
     }
 
-    return 0;
+    return dest->dist_to_origin;
 }

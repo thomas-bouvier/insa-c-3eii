@@ -9,7 +9,6 @@ int main() {
 
     initGraph(&g);
 
-    /*
     addVertexGraph(&g, 'A');
     addVertexGraph(&g, 'B');
     addVertexGraph(&g, 'C');
@@ -39,8 +38,16 @@ int main() {
     addEdgeGraph(&g, 'D', 'J', 25);
     addEdgeGraph(&g, 'J', 'I', 30);
     addEdgeGraph(&g, 'I', 'H', 5);
-    */
 
+    printGraph(&g);
+    writeGraphViz(&g, "graph.dot");
+
+    dist_to_origin = shortestPathDijkstra(&g, 'D', 'H');
+    printf("Shortest path from %c to %c : %dkm\n", 'D', 'H', dist_to_origin);
+    printf("This path is \n");
+    printEdgeList(&findVertex(&g, 'H')->path);
+
+    /*
     addVertexGraph(&g, 'A');
     addVertexGraph(&g, 'B');
     addVertexGraph(&g, 'C');
@@ -64,14 +71,14 @@ int main() {
     addEdgeGraph(&g, 'H', 'J', 167);
     addEdgeGraph(&g, 'H', 'D', 183);
 
-    //printGraph(&g);
+    printGraph(&g);
     writeGraphViz(&g, "graph.dot");
 
     dist_to_origin = shortestPathDijkstra(&g, 'A', 'J');
     printf("Shortest path from %c to %c : %dkm\n", 'A', 'J', dist_to_origin);
     printf("This path is \n");
-    /*
-    printEdgeList(&findVertex(&g,'H')->path);
+
+    printEdgeList(&findVertex(&g, 'J')->path);
     */
 
     deleteGraph(&g);
