@@ -72,3 +72,13 @@ Objectives :
 Objectives :
 * Implement functionalities for a weighted directed graph implemented using linked lists ;
 * Implement Dijkstra's algorithm to find the shortest path.
+
+## MCL
+
+### 1. Unit tests and code coverage
+
+Objectives :
+* Write unit tests for C code ;
+* Manipulate CMocka framework ;
+* Measure the code coverage of the unit tests with gcov ;
+* Analyse the code using valgrind.
