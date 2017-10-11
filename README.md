@@ -3,8 +3,6 @@ Le code des TPs de C proposés à l'INSA de Rennes, département EII
 
 ![alt tag](http://image.noelshack.com/fichiers/2016/51/1482265229-15168898-1848568648698247-7965944903553434182-o.jpg)
 
-## C2
-
 ### 1. GCC, Makefile and main argument
 
 Objectives :
@@ -72,13 +70,3 @@ Objectives :
 Objectives :
 * Implement functionalities for a weighted directed graph implemented using linked lists ;
 * Implement Dijkstra's algorithm to find the shortest path.
-
-## MCL
-
-### 1. Unit tests and code coverage
-
-Objectives :
-* Write unit tests for C code ;
-* Manipulate CMocka framework ;
-* Measure the code coverage of the unit tests with gcov ;
-* Analyse the code using valgrind.
